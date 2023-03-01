@@ -1,29 +1,25 @@
 class ExpensesController < ApplicationController
   before_action :authenticate_user!
+  before_action :type_list
   before_action :set_expense, only: %i[ show edit update destroy ]
-  before_action :type_list, only: %i[ new edit ]
 
-  # GET /expenses or /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.where(:user_id => current_user.id)
   end
 
-  # GET /expenses/1 or /expenses/1.json
   def show
   end
 
-  # GET /expenses/new
   def new
     @expense = Expense.new
   end
 
-  # GET /expenses/1/edit
   def edit
   end
 
-  # POST /expenses or /expenses.json
   def create
     @expense = Expense.new(expense_params)
+    @expense.user_id = current_user.id
 
     respond_to do |format|
       if @expense.save
@@ -36,7 +32,6 @@ class ExpensesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
     respond_to do |format|
       if @expense.update(expense_params)
@@ -49,7 +44,6 @@ class ExpensesController < ApplicationController
     end
   end
 
-  # DELETE /expenses/1 or /expenses/1.json
   def destroy
     @expense.destroy
 
@@ -68,7 +62,6 @@ class ExpensesController < ApplicationController
     @expense_types = ExpenseType.all.map do |exp_type| exp_type.type_name end
   end
 
-    # Only allow a list of trusted parameters through.
     def expense_params
       params.require(:expense).permit(:expense_type, :price, :name)
     end
