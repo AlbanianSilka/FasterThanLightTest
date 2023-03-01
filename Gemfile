@@ -46,6 +46,8 @@ gem 'omniauth', '~> 2.1', '>= 2.1.1'
 
 gem 'pry', '~> 0.14.2'
 
+gem 'devise', '~> 4.9'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

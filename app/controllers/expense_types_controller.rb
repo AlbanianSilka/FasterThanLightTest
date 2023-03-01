@@ -1,5 +1,7 @@
 class ExpenseTypesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_expense_type, only: %i[ show edit update destroy ]
+  before_action :check_admin_role
 
   def index
     @expense_types = ExpenseType.all
@@ -54,6 +56,12 @@ class ExpenseTypesController < ApplicationController
 
   def set_expense_type
     @expense_type = ExpenseType.find(params[:id])
+  end
+
+  def check_admin_role
+    unless current_user.role == "admin"
+      redirect_to root_path
+    end
   end
 
   def expense_params

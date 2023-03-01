@@ -1,3 +1,17 @@
 <h1>
-  There will be a welcome page
+  Welcome page
 </h1>
+
+<% if current_user %>
+  <p> Hello <%= current_user.email  %>!</p>
+  <p> Your current role is <%= current_user.role %> </p>
+  <p>
+    You are successfully authenticated with my app and ready to use it
+  </p>
+  <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
+  <% else %>
+  <p> You are not currently signed in.</p>
+  <%= link_to "Sign Up", new_user_registration_path %>
+  <br>
+  <%= link_to "Login", new_user_session_path %>
+<% end %>
