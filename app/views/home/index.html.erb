@@ -8,6 +8,7 @@
   <p>
     You are successfully authenticated with my app and ready to use it
   </p>
+  <%= link_to "Start Chatting", rooms_path %>
   <%= link_to "Sign out", destroy_user_session_path, 'data-turbo-method': :delete %>
   <% else %>
   <p> You are not currently signed in.</p>
