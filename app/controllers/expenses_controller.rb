@@ -2,9 +2,11 @@ class ExpensesController < ApplicationController
   before_action :authenticate_user!
   before_action :type_list
   before_action :set_expense, only: %i[ show edit update destroy ]
+  helper_method :set_direction, :set_column
 
   def index
-    @expenses = Expense.where(:user_id => current_user.id)
+    params[:sort] ||= "name"
+    @expenses = Expense.where(:user_id => current_user.id).order(set_column + " " + set_direction)
   end
 
   def show
@@ -54,15 +56,24 @@ class ExpensesController < ApplicationController
   end
 
   private
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
+
+  def set_column
+    params[:sort] || "name"
+  end
+
+  def set_direction
+    params[:direction] || "asc"
+  end
+
+  def set_expense
+    @expense = Expense.find(params[:id])
+  end
 
   def type_list
     @expense_types = ExpenseType.all.map do |exp_type| exp_type.type_name end
   end
 
     def expense_params
-      params.require(:expense).permit(:expense_type, :price, :name)
+      params.require(:expense).permit(:expense_type, :price, :name, :description)
     end
 end

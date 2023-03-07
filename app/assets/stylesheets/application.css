@@ -47,6 +47,10 @@ body {
     margin-right: 5px;
 }
 
+.messages {
+    display: block;
+}
+
 .message-box {
     word-wrap: break-word;
     width: fit-content;
@@ -55,4 +59,21 @@ body {
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #555555;
+}
+
+.my_msg {
+    color: white;
+    margin-left: 800px;
+}
+
+.usr_msg {
+    color: white;
+    background-color: rgb(48, 138, 167);
+}
+
+.login-box {
+    display: inline-block;
+    width: 8%;
+    position: absolute;
+    right: 0;
 }
